@@ -10,7 +10,7 @@ SECRET_KEY = "django-insecure-=$0mh&1=ca=vz0hynn!bofbx2_0x%32k(&$hgbnfz9x2bjrx0!
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -22,13 +22,12 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "django_filters",
-    'drf_yasg',
+    "drf_yasg",
     "drf_spectacular",
     "corsheaders",
     "django_celery_beat",
     "habits",
     "users",
-
 ]
 
 MIDDLEWARE = [
@@ -39,7 +38,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware'
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 
@@ -128,8 +127,8 @@ CORS_ALLOWED_ORIGINS = ("http://localhost:8000",)
 CSRF_TRUSTED_ORIGINS = ("http://localhost:8000",)
 CORS_ALLOW_ALL_ORIGINS = True
 
-CELERY_BROKER_URL="redis://127.0.0.1:6379/1"
-CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/1"
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/1"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/1"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
@@ -144,16 +143,14 @@ if CACHE_ENABLED:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": "redis://127.0.0.1:6379/1",
-            }
         }
+    }
 
 
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "habits.tasks.send_reminder_in_telegram",
-        "schedule": timedelta(
-            days=1
-        ),
+        "schedule": timedelta(days=1),
     },
 }
 

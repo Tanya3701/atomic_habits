@@ -17,7 +17,7 @@ class HabitTestCase(APITestCase):
             time="00:00:00",
             periodicity=1,
             published=True,
-            action="Протестировать тесты"
+            action="Протестировать тесты",
         )
 
     def test_habit_retrieve(self):
@@ -29,7 +29,13 @@ class HabitTestCase(APITestCase):
 
     def test_habit_create(self):
         url = reverse("habits:create")
-        data = {"point": "Тест2", "time": "01:01:01", "periodicity": 2, "published": True, "action": "Протестировать тесты2"}
+        data = {
+            "point": "Тест2",
+            "time": "01:01:01",
+            "periodicity": 2,
+            "published": True,
+            "action": "Протестировать тесты2",
+        }
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Habit.objects.count(), 2)
@@ -37,7 +43,7 @@ class HabitTestCase(APITestCase):
     def test_habit_update(self):
         url = reverse("habits:update", args=(self.habit.pk,))
         data = {"point": "Тест3"}
-        response = self.client.patch(url, data=data)
+        self.client.patch(url, data=data)
         self.assertEqual(data.get("point"), "Тест3")
 
     def test_habit_delete(self):
@@ -57,7 +63,3 @@ class HabitTestCase(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Habit.objects.count(), 1)
-
-
-
-

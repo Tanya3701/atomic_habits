@@ -7,6 +7,7 @@ from users.serializers import UserSerializer
 
 class UserCreateAPIView(CreateAPIView):
     """Создание пользователя"""
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)

@@ -1,10 +1,6 @@
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-)
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from habits.models import Habit
@@ -15,6 +11,7 @@ from habits.serializers import HabitSerializer, PublicHabitSerializer
 
 class HabitsCreateAPIView(CreateAPIView):
     """Класс создания модели привычки"""
+
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated,)
@@ -25,8 +22,10 @@ class HabitsCreateAPIView(CreateAPIView):
         habit.owner = self.request.user
         habit.save()
 
+
 class PublicHabitsAPIView(ListAPIView):
     """Вывод списка привычек с разрешенной публикацией"""
+
     queryset = Habit.objects.filter(published=True)
     serializer_class = PublicHabitSerializer
     permission_classes = (AllowAny,)
@@ -35,6 +34,7 @@ class PublicHabitsAPIView(ListAPIView):
 
 class HabitsListAPIView(ListAPIView):
     """Вывод списка привычек текущего пользователя"""
+
     serializer_class = HabitSerializer
     permission_classes = (
         IsOwnerOrReadOnly,
@@ -49,6 +49,7 @@ class HabitsListAPIView(ListAPIView):
 
 class HabitRetrieveAPIView(RetrieveAPIView):
     """Класс просмотра одной привычки"""
+
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = (
@@ -59,6 +60,7 @@ class HabitRetrieveAPIView(RetrieveAPIView):
 
 class HabitUpdateAPIView(UpdateAPIView):
     """Класс редактирования одной привычки"""
+
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = (
@@ -69,6 +71,7 @@ class HabitUpdateAPIView(UpdateAPIView):
 
 class HabitDestroyAPIView(DestroyAPIView):
     """Класс удаления привычки"""
+
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = (

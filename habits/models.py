@@ -1,7 +1,6 @@
-
-
 from django.db import models
 from rest_framework.exceptions import ValidationError
+
 
 class Habit(models.Model):
     owner = models.ForeignKey(

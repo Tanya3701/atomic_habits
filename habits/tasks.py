@@ -1,8 +1,4 @@
-from datetime import timedelta
-from django.utils import timezone
-
 from celery import shared_task
-
 
 from habits.models import Habit
 from habits.services import send_telegram_message

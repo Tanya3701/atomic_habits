@@ -10,6 +10,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     country = models.CharField(max_length=100, null=True, blank=True)
     last_login = models.DateTimeField(auto_now=True, null=True, blank=True)
+    chat_id = models.CharField(max_length=300, null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

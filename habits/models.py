@@ -1,14 +1,11 @@
-from datetime import timedelta
+
 
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
-from users.models import User
-
-
 class Habit(models.Model):
     owner = models.ForeignKey(
-        User,
+        "users.User",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,

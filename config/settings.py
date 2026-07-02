@@ -10,7 +10,7 @@ SECRET_KEY = "django-insecure-=$0mh&1=ca=vz0hynn!bofbx2_0x%32k(&$hgbnfz9x2bjrx0!
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -128,10 +128,34 @@ CORS_ALLOWED_ORIGINS = ("http://localhost:8000",)
 CSRF_TRUSTED_ORIGINS = ("http://localhost:8000",)
 CORS_ALLOW_ALL_ORIGINS = True
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROKER_URL="redis://127.0.0.1:6379/1"
+CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/1"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-
+BROKER_CONNECTION_RETRY_ON_ERROR = True
+BROKER_CONNECTION_RETRY_ON_STARTUP = True
 BROKER_TRANSPORT = "redis"
+
+CACHE_ENABLED = True
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379/1",
+            }
+        }
+
+
+CELERY_BEAT_SCHEDULE = {
+    "task-name": {
+        "task": "habits.tasks.send_reminder_in_telegram",
+        "schedule": timedelta(
+            days=1
+        ),
+    },
+}
+
+TELEGRAM_URL = "http://api.telegram.org/bot"
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")

@@ -92,5 +92,5 @@ jobs:
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
             docker stop myapp || true
             docker rm -f myapp || true                     
-            docker run -d --name myapp-${{ github.sha }} -p 80:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+            docker run -d --name myapp-${{ github.sha }} -p 8080:8090 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
           EOF

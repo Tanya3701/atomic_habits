@@ -36,7 +36,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_NAME: ${{ secrets.DB_NAME }}
+          POSTGRES_NAME: db
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_HOST: ${{ secrets.DB_HOST }}

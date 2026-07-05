@@ -36,7 +36,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
+          POSTGRES_NAME: ${{ secrets.DB_NAME }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
         ports:
           - 5432:5432
         options: >-          

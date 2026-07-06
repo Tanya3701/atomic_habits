@@ -69,11 +69,11 @@ if 'test' in sys.argv:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("NAME"),
-        "USER": os.getenv("USER"),
-        "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST", '127.0.0.1'),
+        "PORT": os.getenv("DB_PORT", '5432'),
         'default': dj_database_url.config(
             default=os.getenv('DATABASE_URL'),
         )

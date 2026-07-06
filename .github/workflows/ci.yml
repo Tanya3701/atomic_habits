@@ -36,13 +36,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_DB: ${{ secrets.DB_NAME }}
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-
         ports:
           - 5432:5432
 

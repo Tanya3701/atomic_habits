@@ -29,6 +29,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
+         SECRET_KEY: ${{ secrets.SECRET_KEY }}
          POSTGRES_DB: ${{ secrets.DB_NAME }}
          POSTGRES_USER: ${{ secrets.DB_USER }}
          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -76,11 +77,11 @@ jobs:
 
       - name: Run migrations
         env:
-          SECRET_KEY: "django-insecure-=$0mh&1=ca=vz0hynn!bofbx2_0x%32k(&$hgbnfz9x2bjrx0!"
-          POSTGRES_DB: "habit"
-          POSTGRES_USER: "postgres"
-          POSTGRES_PASSWORD: "123456"
-          HOST: "localhost"
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HOST: 127.0.0.1
           PORT: "5432"
         run: python manage.py migrate
 

@@ -1,11 +1,13 @@
 import os
 import sys
+import dj_database_url
 from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 SECRET_KEY = "django-insecure-=$0mh&1=ca=vz0hynn!bofbx2_0x%32k(&$hgbnfz9x2bjrx0!"
 
@@ -55,16 +57,29 @@ REST_FRAMEWORK = {
 }
 
 load_dotenv()
+
+if 'test' in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
+    }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": os.getenv("DB_NAME"),
         "USER": os.getenv("DB_USER"),
         "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
+        "HOST": os.getenv("DB_HOST", '127.0.0.1'),
+        "PORT": os.getenv("DB_PORT", '5432'),
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+        )
     }
 }
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -130,18 +145,10 @@ CORS_ALLOWED_ORIGINS = ("http://localhost:8000",)
 CSRF_TRUSTED_ORIGINS = ("http://localhost:8000",)
 CORS_ALLOW_ALL_ORIGINS = True
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 BROKER_TRANSPORT = "redis"
-
-if 'test' in sys.argv:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "test_db.sqlite3",
-        }
-    }

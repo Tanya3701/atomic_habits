@@ -1,9 +1,9 @@
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 
+from habits.tasks import add
 from users.models import User
 from users.serializers import UserSerializer
-from habits.tasks import add
 
 
 class UserCreateAPIView(CreateAPIView):

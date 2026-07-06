@@ -99,7 +99,7 @@ jobs:
 
       - name: Push backend images
         run: |
-          docker tag myapp:backend "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
+          docker tag myapp:Docker "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
           docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
 
       - name: Push celery image

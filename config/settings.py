@@ -54,7 +54,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-
+load_dotenv()
 if 'test' in sys.argv:
     DATABASES = {
         "default": {
@@ -63,7 +63,7 @@ if 'test' in sys.argv:
         }
     }
 
-load_dotenv()
+
 
 DATABASES = {
     "default": {

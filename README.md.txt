@@ -15,7 +15,7 @@ git clone https://github.com/Tanya3701/atomic_habits.git
 
 * pip install -r requirements.txt
 
-* cp .env.sample .env
+* cp .env.example .env
   (заполните переменные)
 
 * python manage.py migrate
@@ -30,9 +30,9 @@ git clone https://github.com/Tanya3701/atomic_habits.git
 
 * sudo systemctl enable docker
 
-* mkdir -p ~/drf-project
+* mkdir -p ~/atomic_habits
 
-* Скопируйте .env в ~/drf-project/.env
+* Скопируйте .env в ~/atomic_habits/.env
 
 CI/CD Pipeline
 
@@ -49,6 +49,6 @@ CI/CD Pipeline
 * SSH_KEY
 * SERVER_IP
 ## Содержание:
-### Главная страница
+
 #### Функционал:
 

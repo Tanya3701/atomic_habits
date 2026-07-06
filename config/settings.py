@@ -6,6 +6,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+import dj_database_url
 
 
 SECRET_KEY = "django-insecure-=$0mh&1=ca=vz0hynn!bofbx2_0x%32k(&$hgbnfz9x2bjrx0!"
@@ -73,6 +74,10 @@ DATABASES = {
         "PASSWORD": os.getenv("PASSWORD"),
         "HOST": os.getenv("HOST"),
         "PORT": os.getenv("PORT"),
+        'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+    )
     }
 }
 

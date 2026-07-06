@@ -97,17 +97,38 @@ jobs:
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }} .
 
-      - name: Push Docker image to Docker Hub
+      - name: Push backend images
         env:
           NAME: ${{ secrets.DB_NAME }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+        run: |
+          IMAGE_NAME=$(docker compose config | yq eval '.services.backend.image' -)
+          docker tag "$IMAGE_NAME" "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
+          docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
 
       - name: Push celery image
         env:
+         NAME: ${{ secrets.DB_NAME }}
+         PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          IMAGE_NAME=$(docker compose config | yq eval '.services.celery.image' -)
+          docker tag "$IMAGE_NAME" "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-celery:latest"
+          docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-celery:latest"
+
+      - name: Push celery_beat image
+        env:
           NAME: ${{ secrets.DB_NAME }}
           PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+        run: |
+          IMAGE_NAME=$(docker compose config | yq eval '.services.celery_beat.image' -)
+          docker tag "$IMAGE_NAME" "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-beat:latest"
+          docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-beat:latest"
+
+      - name: Verify images were pushed
+        run: |
+          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
+          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-celery:latest"
+          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-beat:latest"
 
   deploy:
     needs: build
@@ -119,6 +140,8 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
       - name: Deploy to Server
+        env:
+          SECRET_KEY: ${{ SECRET_KEY }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}

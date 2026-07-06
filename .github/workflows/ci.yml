@@ -98,25 +98,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }} .
 
       - name: Push Docker images
-        run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-docker:latest"
-
-      - name: Push celery image
-        env:
-         NAME: ${{ secrets.DB_NAME }}
-         PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-celery:latest"
-
-      - name: Push celery_beat image
-        env:
-          NAME: ${{ secrets.DB_NAME }}
-          PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-beat:latest"
-
-      - name: Verify images were pushed
-        run: |
-          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-backend:latest"
-          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-celery:latest"
-          docker pull "${{ secrets.DOCKER_HUB_USERNAME }}/atomic_habit-beat:latest"
+        run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}"
 
   deploy:
     needs: build

@@ -9,7 +9,7 @@ services:
         ports:
             - "8000:8080"
         env_file:
-            - .env
+            - .env1
         volumes:
             - .:/app
             - static_volume:/code/static
@@ -33,7 +33,7 @@ services:
         image: postgres:17
         container_name: db
         env_file:
-            - .env
+            - .env1
         volumes:
             - postgres_data:/var/lib/postgresql/data
         networks:
@@ -44,7 +44,7 @@ services:
         ports:
             - "6379:6379"
         env_file:
-            - .env
+            - .env1
         volumes:
             - redis_data:/data
     celery:
@@ -52,7 +52,7 @@ services:
         command:
             bash -c "celery -A config worker --loglevel=info --pool=solo"
         env_file:
-            - .env
+            - .env1
         volumes:
             - .:/app
         depends_on:
@@ -64,7 +64,7 @@ services:
         command:
             bash -c "celery -A config beat -l info"
         env_file:
-            - .env
+            - .env1
         volumes:
             - .:/app
         depends_on:

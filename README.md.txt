@@ -34,8 +34,6 @@ git clone https://github.com/Tanya3701/atomic_habits.git
 
 * Скопируйте .env в ~/drf-project/.env
 
-
-
 CI/CD Pipeline
 
 Автоматически при push, pull_request:
